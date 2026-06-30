@@ -1,15 +1,22 @@
 {
   "name": "gemini-chat",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "FOXA AI Chatbot powered by Google Gemini API",
+  "main": "server.mjs",
   "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs"
+  },
+  "keywords": [
+    "gemini",
+    "ai",
+    "chatbot",
+    "node",
+    "express"
+  ],
+  "author": "Drisha Panja",
+  "license": "ISC",
   "dependencies": {
     "@google/genai": "^2.10.0",
     "dotenv": "^17.4.2",
