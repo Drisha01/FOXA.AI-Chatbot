@@ -13,11 +13,26 @@
 
 <body>
     <div class="container">
-        <!-- logo - FOXA.AI -------- -->
-        <div class="brand-logo">
-            <img id="dark-theme" class="logo-dark" src="asset/FOXA4.png" alt="FOXA.AI Logo" aria-label="FOXA.AI Logo">
-            <img id="light-theme" class="logo-light" src="asset/FOXA3.png" alt="FOXA.AI Logo" aria-label="FOXA.AI Logo">
-        </div>
+        <!-- TOP NAV -------- -->
+        <nav class="top-nav">
+            <div class="brand-logo">
+                <img id="dark-theme" class="logo-dark" src="asset/FOXA4.png" alt="FOXA.AI Logo" aria-label="FOXA.AI Logo">
+                <img id="light-theme" class="logo-light" src="asset/FOXA3.png" alt="FOXA.AI Logo" aria-label="FOXA.AI Logo">
+            </div>
+            
+            <div class="mobile-actions">
+                <button id="mobile-theme-toggle-btn" type="button" class="material-symbols-rounded">light_mode</button>
+                <div class="hamburger-menu">
+                    <button id="hamburger-btn" type="button" class="material-symbols-rounded">menu</button>
+                    <div class="dropdown-menu hidden">
+                        <button id="mobile-delete-chats-btn" type="button">
+                            <span class="material-symbols-rounded">delete</span>
+                            Clear Chats
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
         <!-- APP HEADER  -->
         <header class="app-header">

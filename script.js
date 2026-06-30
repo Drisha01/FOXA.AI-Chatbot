@@ -9,7 +9,11 @@ const addFileBtn = document.getElementById("add-file-btn");
 const fileInput = document.getElementById("file-input");
 
 const themeToggleBtn = document.getElementById("theme-toggle-btn");
+const mobileThemeToggleBtn = document.getElementById("mobile-theme-toggle-btn");
 const deleteChatsBtn = document.getElementById("delete-chats-btn");
+const mobileDeleteChatsBtn = document.getElementById("mobile-delete-chats-btn");
+const hamburgerBtn = document.getElementById("hamburger-btn");
+const dropdownMenu = document.querySelector(".dropdown-menu");
 
 const appHeader = document.querySelector(".app-header");
 const suggestions = document.querySelector(".suggestions");
@@ -35,6 +39,7 @@ let chatArea = null;
 
         document.body.classList.add("light-theme");
         themeToggleBtn.textContent = "dark_mode";
+        if (mobileThemeToggleBtn) mobileThemeToggleBtn.textContent = "dark_mode";
 
     }
 
@@ -44,20 +49,36 @@ let chatArea = null;
 // THEME
 // =========================
 
-themeToggleBtn.addEventListener("click", () => {
-
+function toggleTheme() {
     const light = document.body.classList.toggle("light-theme");
 
-    themeToggleBtn.textContent = light
-        ? "dark_mode"
-        : "light_mode";
+    const icon = light ? "dark_mode" : "light_mode";
+    themeToggleBtn.textContent = icon;
+    if (mobileThemeToggleBtn) mobileThemeToggleBtn.textContent = icon;
 
     localStorage.setItem(
         "theme",
         light ? "light" : "dark"
     );
+}
 
-});
+themeToggleBtn.addEventListener("click", toggleTheme);
+if (mobileThemeToggleBtn) {
+    mobileThemeToggleBtn.addEventListener("click", toggleTheme);
+}
+
+if (hamburgerBtn && dropdownMenu) {
+    hamburgerBtn.addEventListener("click", () => {
+        dropdownMenu.classList.toggle("hidden");
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!hamburgerBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.add("hidden");
+        }
+    });
+}
 
 // =========================
 // SUGGESTIONS
@@ -186,21 +207,22 @@ sendBtn.addEventListener("click", sendMessage);
 // DELETE CHAT
 // =========================
 
-deleteChatsBtn.addEventListener("click", () => {
-
+function deleteChats() {
     if (chatArea) {
-
         chatArea.remove();
-
         chatArea = null;
-
     }
-
     appHeader.classList.remove("hidden");
-
     suggestions.classList.remove("hidden");
+    if (dropdownMenu) {
+        dropdownMenu.classList.add("hidden");
+    }
+}
 
-});
+deleteChatsBtn.addEventListener("click", deleteChats);
+if (mobileDeleteChatsBtn) {
+    mobileDeleteChatsBtn.addEventListener("click", deleteChats);
+}
 
 // =========================
 // SEND MESSAGE
