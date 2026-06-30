@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { GoogleGenAI } from "@google/genai";
+import Groq from "groq-sdk";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -17,8 +17,8 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 // Gemini
-const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
+const groq = new Groq({
+    apiKey: process.env.GROQ_API_KEY,
 });
 
 // Chat API
@@ -31,27 +31,32 @@ app.post("/chat", async (req, res) => {
         const { message } = req.body;
 
         if (!message || message.trim() === "") {
-
             return res.status(400).json({
                 reply: "Message is required."
             });
-
         }
 
-        const result = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: message,
+        const completion = await groq.chat.completions.create({
+            model: "llama-3.3-70b-versatile",
+            messages: [
+                {
+                    role: "user",
+                    content: message,
+                },
+            ],
         });
 
-        console.log(result);
+        const text = completion.choices[0].message.content;
+
+        console.log(text);
 
         res.status(200).json({
-            reply: result.text
+            reply: text
         });
 
     } catch (error) {
 
-        console.error("Gemini Error:", error);
+        console.error("Groq Error:", error);
 
         res.status(500).json({
             reply: error.message || "Internal Server Error"
@@ -68,5 +73,5 @@ app.get("/", (req, res) => {
 
 // Start Server
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
